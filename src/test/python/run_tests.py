@@ -5,6 +5,17 @@ import subprocess
 debugger_command = r'"C:\Program Files\Calibre2\calibre-debug.exe"'
 script_path = r"C:\Users\dwafi\IdeaProjects\API_calibre_web\src\test\python\API.py"
 
+
+import os
+
+# Define paths based on the environment
+if os.name == "nt":  # Windows
+    debugger_command = r'"C:\Program Files\Calibre2\calibre-debug.exe"'
+    script_path = r"C:\Users\dwafi\IdeaProjects\API_calibre_web\src\test\python\API.py"
+else:  # Linux (GitHub Actions)
+    debugger_command = "calibre-debug"
+    script_path = "src/test/python/API.py"
+
 # Command to run
 command = f'{debugger_command} -e {script_path}'
 

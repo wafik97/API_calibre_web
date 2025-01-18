@@ -1,0 +1,24 @@
+name: Run Calibre Tests on Ubuntu
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Calibre
+        run: |
+          sudo apt update
+          sudo apt install -y calibre
+
+      - name: Verify Calibre Installation
+        run: calibre-debug --version
+
+      - name: Run Calibre Tests
+        run: |
+          calibre-debug -e src/test/python/API.py

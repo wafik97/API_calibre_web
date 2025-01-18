@@ -6,7 +6,10 @@ class TestCalibreWeb(unittest.TestCase) :
 
     def setUp(self):
         """Set up the Calibre database connection."""
-        library_path = r"C:\Users\dwafi\IdeaProjects\calibre-web\library"
+
+        script_dir = os.path.dirname(__file__)  # Directory of this script
+        library_path = os.path.abspath(os.path.join(script_dir, "..", "..", "..", "library"))
+
         self.calibre_db = db(library_path).new_api
 
     def test_connection(self):
@@ -18,7 +21,7 @@ class TestCalibreWeb(unittest.TestCase) :
         all_ids = self.calibre_db.all_book_ids()
 
         print("All Book IDs:", all_ids)
-        self.assertEquals(all_ids, {2, 4, 5, 6, 7, 8}, "all_book_ids did not return a list")
+        self.assertEquals(all_ids, {2, 3, 4, 5, 6, 7, 8}, "all_book_ids did not return a list")
 
 
 
