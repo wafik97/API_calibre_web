@@ -19,7 +19,7 @@ public class searchPage {
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         String url = driver.getCurrentUrl();
 
-        if (!driver.getCurrentUrl().contains("localhost:8083/search/stored/")) {  //
+        if (!driver.getCurrentUrl().contains("/search/stored/")) {  //
             throw new IllegalStateException("This is not the search Page. Current page: " + driver.getCurrentUrl());
         }
     }
@@ -39,6 +39,12 @@ public class searchPage {
 
        return number_of_results;
 
+    }
+
+    public boolean bookFound(String title){
+
+
+        return !driver.findElements(By.cssSelector("p[title='" + title + "']")).isEmpty();
     }
 
 

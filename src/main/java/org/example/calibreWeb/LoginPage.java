@@ -21,7 +21,7 @@ public class LoginPage {
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         String url = driver.getCurrentUrl();
 
-        if (!driver.getCurrentUrl().equals("http://localhost:8083/login?next=%2F")) {  //
+        if (!driver.getCurrentUrl().contains("login")) {  //
             throw new IllegalStateException("This is not the login Page. Current page: " + driver.getCurrentUrl());
         }
     }

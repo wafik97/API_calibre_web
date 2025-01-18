@@ -18,7 +18,7 @@ public class unreadPage {
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         String url = driver.getCurrentUrl();
 
-        if (!driver.getCurrentUrl().equals("http://localhost:8083/unread/stored/")) {  //
+        if (!driver.getCurrentUrl().contains("/unread/stored/")) {  //
             throw new IllegalStateException("This is not the unread Page. Current page: " + driver.getCurrentUrl());
         }
     }
@@ -26,7 +26,7 @@ public class unreadPage {
 
     public boolean checkBookInUnread(String title) {
 
-        return !driver.findElements(By.cssSelector("span.img[title='"+title+ "']")).isEmpty();
+        return !driver.findElements(By.cssSelector("div.discover.load-more p[title='" + title + "']")).isEmpty();
 
     }
 

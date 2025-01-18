@@ -17,14 +17,15 @@ public class readPage {
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         String url = driver.getCurrentUrl();
 
-        if (!driver.getCurrentUrl().equals("http://localhost:8083/read/stored/")) {  //
+        if (!driver.getCurrentUrl().contains("/read/stored/")) {  //
             throw new IllegalStateException("This is not the read Page. Current page: " + driver.getCurrentUrl());
         }
     }
 
     public boolean checkBookInRead(String title) {
 
-        return !driver.findElements(By.cssSelector("span.img[title='"+title+ "']")).isEmpty();
+
+        return !driver.findElements(By.cssSelector("div.discover.load-more p[title='" + title + "']")).isEmpty();
     }
 
 

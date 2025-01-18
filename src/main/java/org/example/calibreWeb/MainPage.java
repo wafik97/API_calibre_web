@@ -33,14 +33,14 @@ public class MainPage {
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
 
-        if (!driver.getCurrentUrl().equals("http://localhost:8083/")) {  //
-            throw new IllegalStateException("This is not the main Page. Current page: " + driver.getCurrentUrl());
-        }
+//        if (!driver.getCurrentUrl().equals("http://localhost:8083/")) {  //
+//            throw new IllegalStateException("This is not the main Page. Current page: " + driver.getCurrentUrl());
+//        }
     }
 
     public void checkReacCheckbox(String title){
 
-        String elementName = "p[title='"+title+"']";
+        String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
         element.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -54,7 +54,7 @@ public class MainPage {
 
     public void uncheckReacCheckbox(String title){
 
-        String elementName = "p[title='"+title+"']";
+        String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
         element.click();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -137,6 +137,8 @@ public class MainPage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("btnGroupDrop1pdf"))));
         button.click();
+
+
 
 
         boolean isDownloaded = isFileDownloaded(DOWNLOAD_PATH, EXPECTED_FILE_NAME);

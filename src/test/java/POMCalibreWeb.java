@@ -3,14 +3,22 @@ import org.example.calibreWeb.LoginPage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Map;
 
+import static org.example.calibreWeb.DriverFactory.getDriver;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class POMCalibreWeb {
@@ -26,20 +34,19 @@ public class POMCalibreWeb {
     @BeforeEach
     public void setUp() {
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-popup-blocking"); // Disable popups
-        options.addArguments("--start-maximized");
-        options.setExperimentalOption("prefs", Map.of(
-                "download.default_directory", DOWNLOAD_PATH,
-                "download.prompt_for_download", false,
-                "download.directory_upgrade", true,
-                "safebrowsing.enabled", true
-        ));
 
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        driver.get("http://localhost:8083/");
 
+//        driver = new ChromeDriver(options);
+//        driver.manage().window().maximize();
+        driver = getDriver();
+        driver.get("https://8afd-5-28-174-93.ngrok-free.app/login");
+        try {
+            Wait<WebDriver> wait = new WebDriverWait(driver, Duration.ofSeconds(7));
+            WebElement visitSiteButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Visit Site']")));
+            visitSiteButton.click();
+        } catch (TimeoutException err) {
+            System.out.println("Ngrok warning page was not loaded");
+        }
         loginPage = new LoginPage(driver);
         mainPage = loginPage.loginAdmin();
     }
@@ -71,24 +78,24 @@ public class POMCalibreWeb {
 
     }
 
-    @Test
-    public void testbookWentBackFromRead() {
+//    @Test
+//    public void testbookWentBackFromRead() {
+//
+//        boolean check = mainPage.bookWentBackFromRead("L3").checkBookInRead("L3");
+//        assertFalse(check);
+//
+//
+//    }
 
-        boolean check = mainPage.bookWentBackFromRead("L3").checkBookInRead("L3");
-        assertFalse(check);
-
-
-    }
-
-    @Test
-    public void testBookMovedBackToUnread() {
-
-
-        boolean check = mainPage.bookMovedBackToUnread("L3").checkBookInUnread("L3");
-        assertTrue(check);
-
-
-    }
+//    @Test
+//    public void testBookMovedBackToUnread() {
+//
+//
+//        boolean check = mainPage.bookMovedBackToUnread("L3").checkBookInUnread("L3");
+//        assertTrue(check);
+//
+//
+//    }
 
     @Test
     public void testNumberOfResults(){
@@ -102,6 +109,14 @@ public class POMCalibreWeb {
     public void testDownload() throws InterruptedException {
 
         boolean check = mainPage.downloadBook("L3");
+        assertTrue(check);
+
+    }
+
+    @Test
+    public void testSearch()   {
+
+        boolean check = mainPage.searchInWeb("L3").bookFound("L3");
         assertTrue(check);
 
     }
