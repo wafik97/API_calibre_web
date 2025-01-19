@@ -21,4 +21,4 @@ jobs:
 
       - name: Run Calibre Tests
         run: |
-          calibre-debug -e src/test/python/API.py
+          calibre-debug -e src/test/python/run_tests.py
