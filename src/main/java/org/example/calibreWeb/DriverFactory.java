@@ -3,8 +3,8 @@ package org.example.calibreWeb;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
@@ -24,7 +24,7 @@ public class DriverFactory {
 
     private static final String browser = Optional
             .ofNullable(System.getenv("BROWSER"))
-            .orElse("chrome");
+            .orElse("edge");
 
     public static WebDriver getDriver() {
         if (grid_url != null) {
@@ -56,8 +56,8 @@ public class DriverFactory {
 
             options.addArguments("--headless");
             return new RemoteWebDriver(hubUrl, options);
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            FirefoxOptions options = new FirefoxOptions();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            EdgeOptions options = new EdgeOptions();
             options.addArguments("-headless");
             return new RemoteWebDriver(hubUrl, options);
         } else {
@@ -77,8 +77,8 @@ public class DriverFactory {
                     "safebrowsing.enabled", true
             ));
             return new ChromeDriver(options);
-        } else if (browser.equalsIgnoreCase("firefox")) {
-            return new FirefoxDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            return new EdgeDriver();
         } else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }

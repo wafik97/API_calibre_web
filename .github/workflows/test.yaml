@@ -14,8 +14,8 @@ on:
         required: false
         type: boolean
 
-      firefox_133_0:
-        description: 'Firefox (133.0)'
+      edge_131_0:
+        description: 'Edge (131.0)'
         required: false
         type: boolean
 
@@ -49,10 +49,10 @@ jobs:
           # Tear down grid if exists
           docker stop grid_container || true
 
-  TestFirefox_133_0:
-    name: Test Firefox 133.0
+  TestEdge_131_0:
+    name: Test Edge 131.0
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.firefox_133_0 == 'true' }}
+    if: ${{ github.event.inputs.edge_131_0 == 'true' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -63,17 +63,17 @@ jobs:
           distribution: 'temurin'
           java-version: '23'
 
-      - name: Launch standalone grid - Firefox
+      - name: Launch standalone grid - Edge
         if: ${{ contains(github.event.inputs.grid_url, 'localhost') }}
         run: |
-          docker run --name grid_container -d -p 4444:4444 --shm-size=2gb selenium/standalone-firefox:133.0-geckodriver-0.35-grid-4.27.0-20250101
+          docker run --name grid_container -d -p 4444:4444 --shm-size=2gb selenium/standalone-edge:131.0-edgedriver-131.0-grid-4.27.0-20250101
 
       - name: Run Tests
         run: |
-          export BROWSER=firefox
+          export BROWSER=edge
           export GRID_URL=${{ github.event.inputs.grid_url }}
           
-          mvn test -Dtest=**/selenium/*
+          mvn test -q
           
           # Tear down grid if exists
           docker stop grid_container || true
