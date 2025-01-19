@@ -108,6 +108,8 @@ public class POMCalibreWeb {
     @Test
     public void testDownload() throws InterruptedException {
 
+        System.out.println("check download test");
+
         boolean check = mainPage.downloadBook("L3");
         assertTrue(check);
 

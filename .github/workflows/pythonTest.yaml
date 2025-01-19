@@ -1,4 +1,4 @@
-name: Run Calibre Tests on Ubuntu
+name: Run Calibre Tests
 
 on:
   workflow_dispatch:

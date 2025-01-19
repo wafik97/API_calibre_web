@@ -73,7 +73,7 @@ jobs:
           export BROWSER=edge
           export GRID_URL=${{ github.event.inputs.grid_url }}
           
-          mvn test -q
+          mvn -q test
           
           # Tear down grid if exists
           docker stop grid_container || true
