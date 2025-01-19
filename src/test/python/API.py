@@ -2,7 +2,7 @@ import unittest
 import subprocess
 from calibre.library  import db
 
-from src.test.python.run_tests import result
+
 
 
 class TestCalibreWeb(unittest.TestCase) :
@@ -71,7 +71,7 @@ if __name__ == "__main__" :
     loader = unittest.TestLoader()
     suite = loader.loadTestsFromTestCase(TestCalibreWeb)
     runner = unittest.TextTestRunner()
-    runner.run(suite)
+    result= runner.run(suite)
 
     if not result.wasSuccessful():
         sys.exit(1)
