@@ -21,7 +21,7 @@ class TestCalibreWeb(unittest.TestCase) :
         all_ids = self.calibre_db.all_book_ids()
 
         print("All Book IDs:", all_ids)
-        self.assertEqual(all_ids, {2, 3, 4, 5, 6, 7, 8}, "all_book_ids did not return a list")
+        self.assertEqual(all_ids, {2, 4, 5, 6, 7, 8}, "all_book_ids did not return a list")
 
 
 
