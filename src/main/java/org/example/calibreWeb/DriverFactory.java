@@ -24,7 +24,7 @@ public class DriverFactory {
 
     private static final String browser = Optional
             .ofNullable(System.getenv("BROWSER"))
-            .orElse("chrome");
+            .orElse("edge");
 
     public static WebDriver getDriver() {
         if (grid_url != null) {
@@ -58,6 +58,14 @@ public class DriverFactory {
             return new RemoteWebDriver(hubUrl, options);
         } else if (browser.equalsIgnoreCase("edge")) {
             EdgeOptions options = new EdgeOptions();
+            options.addArguments("--disable-popup-blocking"); // Disable popups
+            options.addArguments("--start-maximized");
+            options.setExperimentalOption("prefs", Map.of(
+                    "download.default_directory", DOWNLOAD_PATH,
+                    "download.prompt_for_download", false,
+                    "download.directory_upgrade", true,
+                    "safebrowsing.enabled", true
+            ));
             options.addArguments("-headless");
             return new RemoteWebDriver(hubUrl, options);
         } else {
@@ -78,7 +86,18 @@ public class DriverFactory {
             ));
             return new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("edge")) {
-            return new EdgeDriver();
+
+            EdgeOptions options = new EdgeOptions();
+            options.addArguments("--disable-popup-blocking"); // Disable popups
+            options.addArguments("--start-maximized");
+            options.setExperimentalOption("prefs", Map.of(
+                    "download.default_directory", DOWNLOAD_PATH,
+                    "download.prompt_for_download", false,
+                    "download.directory_upgrade", true,
+                    "safebrowsing.enabled", true
+            ));
+
+            return new EdgeDriver(options);
         } else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }

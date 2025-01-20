@@ -38,7 +38,7 @@ public class MainPage {
 //        }
     }
 
-    public void checkReacCheckbox(String title){
+    public void checkReadCheckbox(String title){
 
         String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
@@ -52,7 +52,7 @@ public class MainPage {
 
     }
 
-    public void uncheckReacCheckbox(String title){
+    public void uncheckReadCheckbox(String title){
 
         String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
@@ -66,9 +66,46 @@ public class MainPage {
 
     }
 
+    public void uncheckArchiveCheckbox(String title){
+
+        String elementName = "div.discover.load-more p[title='" + title + "']";
+        WebElement element = driver.findElement(By.cssSelector(elementName));
+        element.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("archived_cb"))));
+        if(checkbox.isSelected()) {
+            checkbox.click();
+        }
+        driver.navigate().refresh();
+
+    }
+
+    public void checkArchiveCheckbox(String title){
+
+        String elementName = "div.discover.load-more p[title='" + title + "']";
+        WebElement element = driver.findElement(By.cssSelector(elementName));
+        element.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("archived_cb"))));
+        if(!checkbox.isSelected()) {
+            checkbox.click();
+        }
+        driver.navigate().refresh();
+
+
+    }
+
+
+
+
+
+
+
+
+
     public boolean markBookRead(String title) {
 
-        checkReacCheckbox(title);
+        checkReadCheckbox(title);
 
         return !driver.findElements(By.cssSelector("span.img[title='"+title+"'] > span.badge.read.glyphicon.glyphicon-ok")).isEmpty();
 
@@ -77,7 +114,7 @@ public class MainPage {
     public readPage bookWentToRead(String title) {
 
 
-        checkReacCheckbox(title);
+        checkReadCheckbox(title);
         driver.findElement(By.cssSelector("a[href='/read/stored/']")).click();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return new readPage(driver);
@@ -87,7 +124,7 @@ public class MainPage {
     public unreadPage bookMovedFromUnread(String title) {
 
 
-        checkReacCheckbox(title);
+        checkReadCheckbox(title);
         driver.findElement(By.cssSelector("a[href='/unread/stored/']")).click();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return new unreadPage(driver);
@@ -96,8 +133,8 @@ public class MainPage {
 
     public unreadPage bookMovedBackToUnread(String title) {
 
-        checkReacCheckbox(title);
-        uncheckReacCheckbox(title);
+        checkReadCheckbox(title);
+        uncheckReadCheckbox(title);
         driver.findElement(By.cssSelector("a[href='/unread/stored/']")).click();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return new unreadPage(driver);
@@ -107,8 +144,8 @@ public class MainPage {
 
     public readPage bookWentBackFromRead(String title) {
 
-        checkReacCheckbox(title);
-        uncheckReacCheckbox(title);
+        checkReadCheckbox(title);
+        uncheckReadCheckbox(title);
         driver.findElement(By.cssSelector("a[href='/read/stored/']")).click();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return new readPage(driver);
@@ -130,7 +167,7 @@ public class MainPage {
 
 
     public boolean downloadBook(String title) throws InterruptedException {
-        String elementName = "p[title='" + title + "']";
+        String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
         element.click();
 
@@ -152,7 +189,7 @@ public class MainPage {
 
 
     private boolean isFileDownloaded(String downloadDir, String fileName) throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(4000);
 
         File file = new File(downloadDir, fileName); // Combine folder path and file name
 
@@ -165,6 +202,23 @@ public class MainPage {
         if (file.exists()) {
             boolean delete = file.delete();
         }
+    }
+
+
+    public boolean checkBookInPage(String title) {
+
+        return !driver.findElements(By.cssSelector("div.discover.load-more p[title='" + title + "']")).isEmpty();
+
+    }
+
+    public ArchivePage bookWentToArchivePage(String title) {
+
+
+        checkArchiveCheckbox(title);
+        driver.findElement(By.cssSelector("a[href='/archived/stored/']")).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        return new ArchivePage(driver);
+
     }
 
 

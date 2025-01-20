@@ -35,6 +35,8 @@ public class TestCalibreWeb {
 
 //        driver = new ChromeDriver(options);
 //        driver.manage().window().maximize();
+
+
         driver = getDriver();
         driver.get("https://8afd-5-28-174-93.ngrok-free.app/login");
         try {
@@ -47,6 +49,18 @@ public class TestCalibreWeb {
         loginPage = new LoginPage(driver);
         mainPage = loginPage.loginAdmin();
     }
+
+
+//    void prepareTest(){
+//
+//
+//
+//
+//    }
+
+
+
+
 
     @Test
     public void testMarkingBook() {
@@ -75,24 +89,24 @@ public class TestCalibreWeb {
 
     }
 
-//    @Test
-//    public void testbookWentBackFromRead() {
-//
-//        boolean check = mainPage.bookWentBackFromRead("L3").checkBookInRead("L3");
-//        assertFalse(check);
-//
-//
-//    }
+    @Test
+    public void testbookWentBackFromRead() {
 
-//    @Test
-//    public void testBookMovedBackToUnread() {
-//
-//
-//        boolean check = mainPage.bookMovedBackToUnread("L3").checkBookInUnread("L3");
-//        assertTrue(check);
-//
-//
-//    }
+        boolean check = mainPage.bookWentBackFromRead("L3").checkBookInRead("L3");
+        assertFalse(check);
+
+
+    }
+
+    @Test
+    public void testBookMovedBackToUnread() {
+
+
+        boolean check = mainPage.bookMovedBackToUnread("L3").checkBookInUnread("L3");
+        assertTrue(check);
+
+
+    }
 
     @Test
     public void testNumberOfResults(){
@@ -117,6 +131,17 @@ public class TestCalibreWeb {
 
         boolean check = mainPage.searchInWeb("L3").bookFound("L3");
         assertTrue(check);
+
+    }
+
+
+    @Test
+    public void testArchiveBook(){
+
+        boolean check1= mainPage.bookWentToArchivePage("L1").checkBookInArchivePage("L1") ;
+        boolean check2= mainPage.checkBookInPage("L1");
+
+        assertTrue(check1 & check1);
 
     }
 
