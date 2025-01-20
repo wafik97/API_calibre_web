@@ -24,7 +24,7 @@ public class DriverFactory {
 
     private static final String browser = Optional
             .ofNullable(System.getenv("BROWSER"))
-            .orElse("edge");
+            .orElse("chrome");
 
     public static WebDriver getDriver() {
         if (grid_url != null) {

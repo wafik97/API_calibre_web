@@ -19,23 +19,14 @@ import java.time.Duration;
 import static org.example.calibreWeb.DriverFactory.getDriver;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestCalibreWeb {
+public class CalibreWeb {
     private WebDriver driver;
     private LoginPage loginPage;
     private MainPage mainPage;
-    static String projectPath = Paths.get("").toAbsolutePath().toString();
-    static String filePath =  "\\src\\main\\downloadTest";
-    private static final String DOWNLOAD_PATH = projectPath+filePath;
-    private static final String EXPECTED_FILE_NAME = "L3 - wafi.pdf";
 
 
     @BeforeEach
     public void setUp() {
-
-
-
-//        driver = new ChromeDriver(options);
-//        driver.manage().window().maximize();
 
 
         driver = getDriver();
@@ -50,23 +41,6 @@ public class TestCalibreWeb {
         loginPage = new LoginPage(driver);
         mainPage = loginPage.loginAdmin();
     }
-
-
-    void prepareTest(){
-
-        mainPage.searchInWeb("L1").uncheckArchiveCheckbox("L1");
-
-
-        driver.navigate().back();
-        driver.navigate().refresh();
-
-
-     //   mainPage = new MainPage(driver);
-
-
-    }
-
-
 
 
 
@@ -97,24 +71,7 @@ public class TestCalibreWeb {
 
     }
 
-//    @Test
-//    public void testbookWentBackFromRead() {
-//
-//        boolean check = mainPage.bookWentBackFromRead("L3").checkBookInRead("L3");
-//        assertFalse(check);
-//
-//
-//    }
-//
-//    @Test
-//    public void testBookMovedBackToUnread() {
-//
-//
-//        boolean check = mainPage.bookMovedBackToUnread("L3").checkBookInUnread("L3");
-//        assertTrue(check);
-//
-//
-//    }
+
 
     @Test
     public void testNumberOfResults(){
@@ -128,7 +85,6 @@ public class TestCalibreWeb {
     @DisabledIfEnvironmentVariable(named = "CI", matches = "true")
     public void testDownload() throws InterruptedException {
 
-        System.out.println("check download test");
 
         boolean check = mainPage.downloadBook("L3");
         assertTrue(check);
@@ -142,22 +98,6 @@ public class TestCalibreWeb {
         assertTrue(check);
 
     }
-
-
-//    @Test
-//    public void testArchiveBook(){
-//
-//        prepareTest();
-//
-//        boolean check1= mainPage.bookWentToArchivePage("L1").checkBookInArchivePage("L1") ;
-//        boolean check2= mainPage.checkBookInPage("L1");
-//
-//        assertTrue(check1 & check2);
-//
-//    }
-
-
-
 
     @AfterEach
     public void tearDown() {

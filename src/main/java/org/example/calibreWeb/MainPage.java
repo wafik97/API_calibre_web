@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,6 +18,27 @@ import java.util.concurrent.TimeUnit;
 
 public class MainPage {
     private WebDriver driver;
+
+
+    @FindBy(id = "have_read_cb")
+    private WebElement readCheckBox;
+
+    @FindBy(css = "a[href='/read/stored/']")
+    private WebElement readPage;
+
+    @FindBy(css = "a[href='/unread/stored/']")
+    private WebElement unreadPage;
+
+    @FindBy(id = "query")
+    private WebElement searchBar;
+
+    @FindBy(id = "query_submit")
+    private WebElement submitSearch;
+
+    @FindBy(id = "btnGroupDrop1pdf")
+    private WebElement downloadB;
+
+
 
 
 
@@ -31,11 +54,7 @@ public class MainPage {
         this.driver = driver;
 
         this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
-
-
-//        if (!driver.getCurrentUrl().equals("http://localhost:8083/")) {  //
-//            throw new IllegalStateException("This is not the main Page. Current page: " + driver.getCurrentUrl());
-//        }
+        PageFactory.initElements(driver, this);
     }
 
     public void checkReadCheckbox(String title){
@@ -43,8 +62,9 @@ public class MainPage {
         String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
         element.click();
+        PageFactory.initElements(driver, this);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("have_read_cb"))));
+        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(readCheckBox));
         if(!checkbox.isSelected()) {
             checkbox.click();
         }
@@ -57,56 +77,15 @@ public class MainPage {
         String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
         element.click();
+        PageFactory.initElements(driver, this);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("have_read_cb"))));
+        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(readCheckBox));
         if(checkbox.isSelected()) {
             checkbox.click();
         }
         driver.navigate().refresh();
 
     }
-
-    public void uncheckArchiveCheckbox(String title){
-
-        String elementName = "div.discover.load-more p[title='" + title + "']";
-        WebElement element = driver.findElement(By.cssSelector(elementName));
-        element.click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("archived_cb"))));
-        if(checkbox.isSelected()) {
-            checkbox.click();
-        }
-        driver.navigate().refresh();
-
-    }
-
-    public void checkArchiveCheckbox(String title){
-
-        String elementName = "div.discover.load-more p[title='" + title + "']";
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector(elementName))));
-
-      //  WebElement element = driver.findElement(By.cssSelector(elementName));
-        element.click();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("archived_cb"))));
-        if(!checkbox.isSelected()) {
-            checkbox.click();
-        }
-        element = driver.findElement(By.id("details_close"));
-        element.click();
-
-
-        driver.navigate().refresh();
-
-    }
-
-
-
-
-
-
 
 
 
@@ -122,7 +101,7 @@ public class MainPage {
 
 
         checkReadCheckbox(title);
-        driver.findElement(By.cssSelector("a[href='/read/stored/']")).click();
+        readPage.click();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return new readPage(driver);
 
@@ -132,40 +111,17 @@ public class MainPage {
 
 
         checkReadCheckbox(title);
-        driver.findElement(By.cssSelector("a[href='/unread/stored/']")).click();
+        unreadPage.click();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         return new unreadPage(driver);
-
-    }
-
-    public unreadPage bookMovedBackToUnread(String title) {
-
-        checkReadCheckbox(title);
-        uncheckReadCheckbox(title);
-        driver.findElement(By.cssSelector("a[href='/unread/stored/']")).click();
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        return new unreadPage(driver);
-
-
-    }
-
-    public readPage bookWentBackFromRead(String title) {
-
-        checkReadCheckbox(title);
-        uncheckReadCheckbox(title);
-        driver.findElement(By.cssSelector("a[href='/read/stored/']")).click();
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        return new readPage(driver);
 
     }
 
 
     public searchPage searchInWeb(String text){
 
-        WebElement element = driver.findElement(By.id("query"));
-        element.sendKeys(text);
-        element = driver.findElement(By.id("query_submit"));
-        element.click();
+        searchBar.sendKeys(text);
+        submitSearch.click();
 
 
         return new searchPage(driver);
@@ -174,12 +130,14 @@ public class MainPage {
 
 
     public boolean downloadBook(String title) throws InterruptedException {
+
+
         String elementName = "div.discover.load-more p[title='" + title + "']";
         WebElement element = driver.findElement(By.cssSelector(elementName));
         element.click();
-
+        PageFactory.initElements(driver, this);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("btnGroupDrop1pdf"))));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(downloadB));
         button.click();
 
 
@@ -215,16 +173,6 @@ public class MainPage {
     public boolean checkBookInPage(String title) {
 
         return !driver.findElements(By.cssSelector("div.discover.load-more p[title='" + title + "']")).isEmpty();
-
-    }
-
-    public ArchivePage bookWentToArchivePage(String title) {
-
-
-        checkArchiveCheckbox(title);
-        driver.findElement(By.cssSelector("a[href='/archived/stored/']")).click();
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        return new ArchivePage(driver);
 
     }
 
