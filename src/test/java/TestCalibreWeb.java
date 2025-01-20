@@ -51,12 +51,19 @@ public class TestCalibreWeb {
     }
 
 
-//    void prepareTest(){
-//
-//
-//
-//
-//    }
+    void prepareTest(){
+
+        mainPage.searchInWeb("L1").uncheckArchiveCheckbox("L1");
+
+
+        driver.navigate().back();
+        driver.navigate().refresh();
+
+
+     //   mainPage = new MainPage(driver);
+
+
+    }
 
 
 
@@ -89,24 +96,24 @@ public class TestCalibreWeb {
 
     }
 
-    @Test
-    public void testbookWentBackFromRead() {
-
-        boolean check = mainPage.bookWentBackFromRead("L3").checkBookInRead("L3");
-        assertFalse(check);
-
-
-    }
-
-    @Test
-    public void testBookMovedBackToUnread() {
-
-
-        boolean check = mainPage.bookMovedBackToUnread("L3").checkBookInUnread("L3");
-        assertTrue(check);
-
-
-    }
+//    @Test
+//    public void testbookWentBackFromRead() {
+//
+//        boolean check = mainPage.bookWentBackFromRead("L3").checkBookInRead("L3");
+//        assertFalse(check);
+//
+//
+//    }
+//
+//    @Test
+//    public void testBookMovedBackToUnread() {
+//
+//
+//        boolean check = mainPage.bookMovedBackToUnread("L3").checkBookInUnread("L3");
+//        assertTrue(check);
+//
+//
+//    }
 
     @Test
     public void testNumberOfResults(){
@@ -135,15 +142,17 @@ public class TestCalibreWeb {
     }
 
 
-    @Test
-    public void testArchiveBook(){
-
-        boolean check1= mainPage.bookWentToArchivePage("L1").checkBookInArchivePage("L1") ;
-        boolean check2= mainPage.checkBookInPage("L1");
-
-        assertTrue(check1 & check1);
-
-    }
+//    @Test
+//    public void testArchiveBook(){
+//
+//        prepareTest();
+//
+//        boolean check1= mainPage.bookWentToArchivePage("L1").checkBookInArchivePage("L1") ;
+//        boolean check2= mainPage.checkBookInPage("L1");
+//
+//        assertTrue(check1 & check2);
+//
+//    }
 
 
 

@@ -24,6 +24,11 @@ public class ArchivePage {
 
     public boolean checkBookInArchivePage(String title) {
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return !driver.findElements(By.cssSelector("div.discover.load-more p[title='" + title + "']")).isEmpty();
 
     }

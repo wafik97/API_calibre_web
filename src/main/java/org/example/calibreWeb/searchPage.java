@@ -4,6 +4,8 @@ import com.sun.source.tree.BreakTree;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -45,6 +47,24 @@ public class searchPage {
 
 
         return !driver.findElements(By.cssSelector("p[title='" + title + "']")).isEmpty();
+    }
+
+
+    public void uncheckArchiveCheckbox(String title){
+
+        String elementName = "p[title='" + title + "']";
+        WebElement element = driver.findElement(By.cssSelector(elementName));
+        element.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("archived_cb"))));
+        if(checkbox.isSelected()) {
+            checkbox.click();
+        }
+
+        element = driver.findElement(By.id("details_close"));
+        element.click();
+        driver.navigate().refresh();
+
     }
 
 

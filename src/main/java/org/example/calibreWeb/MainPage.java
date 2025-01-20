@@ -83,15 +83,22 @@ public class MainPage {
     public void checkArchiveCheckbox(String title){
 
         String elementName = "div.discover.load-more p[title='" + title + "']";
-        WebElement element = driver.findElement(By.cssSelector(elementName));
-        element.click();
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.cssSelector(elementName))));
+
+      //  WebElement element = driver.findElement(By.cssSelector(elementName));
+        element.click();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("archived_cb"))));
         if(!checkbox.isSelected()) {
             checkbox.click();
         }
-        driver.navigate().refresh();
+        element = driver.findElement(By.id("details_close"));
+        element.click();
 
+
+        driver.navigate().refresh();
 
     }
 
