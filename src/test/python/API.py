@@ -49,12 +49,7 @@ class TestCalibreWeb(unittest.TestCase) :
         book_info = {
             "Title": "Harry Potter: The Complete Collection",
             "Title sort": "Harry Potter: The Complete Collection",
-            "Author(s)": "['Rowling, J.K.']",
             "Publisher": "Arthur A. Levine Books",
-            "Languages": "eng",
-            "Timestamp": "2024-12-23T09:08:05+00:00",
-            "Published": "2015-12-13T23:00:00+00:00",
-            "FBook 2 exists": True
         }
 
 

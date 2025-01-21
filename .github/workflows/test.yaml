@@ -58,7 +58,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: report unittests
+          name: chrome report unittests
           path: 'target/surefire-reports/TEST-*.xml'
           reporter: java-junit
 
@@ -95,6 +95,6 @@ jobs:
         uses: dorny/test-reporter@v1
         if: success() || failure()
         with:
-          name: report unittests
+          name: edge report unittests
           path: 'target/surefire-reports/TEST-*.xml'
           reporter: java-junit
