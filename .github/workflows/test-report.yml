@@ -1,7 +1,7 @@
 name: 'Test Report'
 on:
   workflow_run:
-    workflows: ['CI']                     # runs after CI workflow
+    workflows: ['Smoke testing']                     # runs after CI workflow
     types:
       - completed
 permissions:
@@ -15,6 +15,6 @@ jobs:
       - uses: dorny/test-reporter@v1
         with:
           artifact: test-results            # artifact name
-          name: JEST Tests                  # Name of the check run which will be created
+          name: My Tests                  # Name of the check run which will be created
           path: 'target/surefire-reports/TEST-*.xml'                     # Path to test results (inside artifact .zip)
-          reporter: jest-junit              # Format of test results
+          reporter: java-junit              # Format of test results
