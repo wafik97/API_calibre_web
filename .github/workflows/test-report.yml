@@ -16,5 +16,5 @@ jobs:
         with:
           artifact: test-results            # artifact name
           name: My Tests                  # Name of the check run which will be created
-          path: 'target/surefire-reports/TEST-*.xml'                     # Path to test results (inside artifact .zip)
+          path: 'target/surefire-reports/TEST-*.xml'                      # Path to test results (inside artifact .zip)
           reporter: java-junit              # Format of test results
