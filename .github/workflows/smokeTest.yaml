@@ -49,8 +49,10 @@ jobs:
           # Tear down grid if exists
           docker stop grid_container || true
 
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v3
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
         with:
-          name: test-results
-          path: target/surefire-reports/
+          name: smokeTest report unittests
+          path: 'target/surefire-reports/TEST-*.xml'
+          reporter: java-junit
