@@ -44,22 +44,15 @@ jobs:
           export BROWSER=chrome
           export GRID_URL=${{ github.event.inputs.grid_url }}
           
-          mvn -q clean test -Dtest=TestSmokeTest
+          mvn -q test -Dtest=TestSmokeTest
           
           # Tear down grid if exists
           docker stop grid_container || true
 
-      - name: Verify Test Reports
-        run: ls -lah target/surefire-reports/
-
-      - name: Show Test Report in Logs
-        run: cat target/surefire-reports/TEST-*.xml | tee test-report.log
-
       - name: Test Report
         uses: dorny/test-reporter@v1
-        if: always()
+        if: success() || failure()
         with:
-          name: Smoke Test Report
+          name: smokeTest report unittests
           path: 'target/surefire-reports/TEST-*.xml'
           reporter: java-junit
-          fail-on-missing: false
